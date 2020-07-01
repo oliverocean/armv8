@@ -14,7 +14,7 @@ int main()
         j++;
     }
 
-    printf("%d\n", f);
+    printf("f: %d\n", f);
 
     return 0;
 }
