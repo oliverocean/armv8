@@ -5,7 +5,6 @@
  */
 
 /* -----------[ Text ]----------- */
-// reserved for executable instructions
             .text
             .global main
 main:
@@ -41,18 +40,15 @@ exit:
 	    svc #0
 
 /* -----------[ Data ]----------- */
-// reserved for initialized and uninitialized (read/write) data
             .data
 
-// small values may be set as 
-// .word data type (32bits, ie: W0, W1, W2...)
+// small values may be set as 32-bit data type (W0, W1, W2...)
 f_value:    .word    0x00    // f = 0
 g_value:    .word    0x01    // g = 1
 i_value:    .word    0x0A    // i = 10
 j_value:    .word    0x05    // j = 5
 
-// addresses need to be set as 
-// .dword data type (64-bits, ie: X0, X1, X2...) 
+// addresses need to be set as 64-bit data type (X0, X1, X2...) 
 f_address:  .dword   f_value
 g_address:  .dword   g_value
 i_address:  .dword   i_value
