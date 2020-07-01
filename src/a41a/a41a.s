@@ -1,7 +1,7 @@
 /* *
  * @author: Oliver Ocean <github@oliverocean.co>
  * @file: a41a.s
- * @brief: port the C program 'a41a' (~/data/a41a.c) to assembly language
+ * @brief: port the C program 'a41a' (~/data/a41a.c) to ARMv8 assembly language
  */
 
 /* -----------[ Text ]----------- */
@@ -28,11 +28,11 @@ while_loop:
 	    // end of loop    // reevaluate, top of loop 
 
 print_result:
-	    ??? x8, #??		// print syscall
+	    mov x8, #64       // sys_write from <uninstd.h>, fs/read_write.c (Linux)
 	    svc #0
 
 exit:
-	    mov x8, #93		// sys_exit
+	    mov x8, #93	      // sys_exit from <unistd.h>, kernel/exit.c (Linux)
 	    svc #0
 
 /* -----------[ Data ]----------- */
