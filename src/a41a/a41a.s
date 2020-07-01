@@ -9,23 +9,27 @@
             .text
             .global main
 main:
+            // set stdout to terminal
+	    mov x0, #0
+
             // load memory address of variables
-	    ldr x0, f_address
-	    ldr x1, g_address
-	    ldr x2, i_address
-	    ldr x3, j_address
+	    ldr x1, f_address
+	    ldr x2, g_address
+	    ldr x3, i_address
+	    ldr x4, j_address
 
             // load values from memory addresses
-	    ldr w0, [x0]
-	    ldr w1, [x1]
-	    ldr w2, [x2]
-	    ldr w3, [x3]
+	    ldr w1, [x1]      // f
+	    ldr w2, [x2]      // g
+	    ldr w3, [x3]      // i
+	    ldr w4, [x4]      // j
 
 while_loop:
-	    // while j != i   // test equality of j and i, if equal, exit loop
-	    // f = g + j      // add g and j, store in f
-	    // j++            // add j and 1, store in j
-	    // end of loop    // reevaluate, top of loop 
+            cmp w3, w4        // does i == j ?
+	    beq done          // if equal, exit loop
+	    add w1, w2, w4    // f = g + j
+	    add x4, x4, #1    // j++
+	    b while_loop      // branch to top of loop
 
 print_result:
 	    mov x8, #64       // sys_write from <uninstd.h>, fs/read_write.c (Linux)
