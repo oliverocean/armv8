@@ -26,7 +26,7 @@ main:
 
 while_loop:
             cmp w3, w4        // does i == j ?
-	    beq done          // if equal, exit loop
+	    beq print_result  // branch if equal
 	    add w1, w2, w4    // f = g + j
 	    add x4, x4, #1    // j++
 	    b while_loop      // branch to top of loop
