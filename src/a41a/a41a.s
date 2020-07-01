@@ -12,13 +12,13 @@ main:
             // set stdout to terminal
 	    mov x0, #0
 
-            // load memory address of variables
+            // load 64-bit memory address of variables
 	    ldr x1, f_address
 	    ldr x2, g_address
 	    ldr x3, i_address
 	    ldr x4, j_address
 
-            // load values from memory addresses
+            // load 32-bit values from memory addresses
 	    ldr w1, [x1]      // f
 	    ldr w2, [x2]      // g
 	    ldr w3, [x3]      // i
@@ -26,14 +26,15 @@ main:
 
 while_loop:
             cmp w3, w4        // does i == j ?
-	    beq print_result  // branch if equal
+	    beq print_results // branch if equal
 	    add w1, w2, w4    // f = g + j
 	    add x4, x4, #1    // j++
 	    b while_loop      // branch to top of loop
 
-print_result:
+print_results:
 	    mov x8, #64       // sys_write from <uninstd.h>, fs/read_write.c (Linux)
 	    svc #0
+	    b exit
 
 exit:
 	    mov x8, #93	      // sys_exit from <unistd.h>, kernel/exit.c (Linux)
@@ -45,10 +46,10 @@ exit:
 
 // small values may be set as 
 // .word data type (32bits, ie: W0, W1, W2...)
-f_value:    .word    0x00    // i = 0
-g_value:    .word    0x01    // i = 1
+f_value:    .word    0x00    // f = 0
+g_value:    .word    0x01    // g = 1
 i_value:    .word    0x0A    // i = 10
-j_value:    .word    0x05    // i = 5
+j_value:    .word    0x05    // j = 5
 
 // addresses need to be set as 
 // .dword data type (64-bits, ie: X0, X1, X2...) 
