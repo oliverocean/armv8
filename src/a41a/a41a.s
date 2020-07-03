@@ -33,6 +33,8 @@ while_loop:
 print_results:
 	    mov x8, #64       // sys_write from <uninstd.h>, fs/read_write.c (Linux)
 	    svc #0
+	    adr x0, outstr
+	    bl printf
 	    b exit
 
 exit:
@@ -53,5 +55,7 @@ f_address:  .dword   f_value
 g_address:  .dword   g_value
 i_address:  .dword   i_value
 j_address:  .dword   j_value
+
+outstr:     .asciz   "f=%d\n"
 
 // EOF
