@@ -23,6 +23,9 @@ main:
 	    ldr w3, [x3]      // i
 	    ldr w4, [x4]      // j
 
+	    bl while_loop
+	    b exit
+
 while_loop:
             cmp w3, w4        // does i == j ?
 	    beq print_results // branch if equal
@@ -31,11 +34,8 @@ while_loop:
 	    b while_loop      // branch to top of loop
 
 print_results:
-	    mov x8, #64       // sys_write from <uninstd.h>, fs/read_write.c (Linux)
-	    svc #0	      // extraneous?
-	    adr x0, outstr    // verify against pseudocode
+	    adr x0, msg
 	    bl printf
-	    b exit
 
 exit:
 	    mov x8, #93	      // sys_exit from <unistd.h>, kernel/exit.c (Linux)
@@ -56,6 +56,7 @@ g_address:  .dword   g_value
 i_address:  .dword   i_value
 j_address:  .dword   j_value
 
-outstr:     .asciz   "f=%d\n"
+// format printf output
+msg:        .asciz   "f=%d\n"
 
 // EOF
