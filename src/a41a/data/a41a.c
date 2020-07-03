@@ -14,7 +14,7 @@ int main()
         j++;
     }
 
-    printf("f: %d\n", f);
+    printf(" > results: [ %d ] (f_value)\n", f);
 
     return 0;
 }
