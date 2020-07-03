@@ -57,6 +57,6 @@ i_address:  .dword   i_value
 j_address:  .dword   j_value
 
 // format printf output
-msg:        .asciz   "f=%d\n"
+msg:        .asciz   " > results: [ %d ] (f_value)\n"
 
 // EOF
