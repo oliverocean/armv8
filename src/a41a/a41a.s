@@ -33,7 +33,7 @@ while_loop:
 print_results:
 	    mov x8, #64       // sys_write from <uninstd.h>, fs/read_write.c (Linux)
 	    svc #0	      // extraneous?
-	    adr x0, outstr
+	    adr x0, outstr    // very against pseudocode
 	    bl printf
 	    b exit
 
