@@ -9,7 +9,7 @@
             .global main
 main:
             bl get_input
-	    mov x0, #0
+	    mov x0, xzr
 	    mov x1, xzr       // result
 	    mov x2, #4        // a 
 	    mov x3, #3        // b 
