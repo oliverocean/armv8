@@ -9,10 +9,28 @@
             .global main
 main:
 	    mov x0, #0
-
+	    mov x1, #31   // c in main(), a in f3()
+	    mov x2, #128  // p in main(), b in f3()
+	    bl f3_func
 	    b exit
 
-branch:
+f3_func:
+	    lsr x3, x1, #2 // c = a >> 2 (=7)
+	    add x2, x1, x2 // *b = a + *b
+	    b if_sub
+
+if_sub:
+	    // eval: a < 2 
+	    cmp x1, #2
+	    blt output_results
+
+	    // eval: c < 0
+	    cmp x3, xzr
+	    blt output_results
+
+	    // c = c | a
+	    orr x3, x3, x1
+	    b output_results
 
 
 output_results:
@@ -25,6 +43,7 @@ exit:
 
 /* -----------[ Data ]----------- */
             .data
+result_msg: .asciz "> f3(c, &p): [ %d ]\n"
 
 
 // EOF
