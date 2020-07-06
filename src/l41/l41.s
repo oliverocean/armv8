@@ -9,22 +9,25 @@
             .global main
 main:
             bl get_input
-	    //mov x2, x19       // a = get_intput 
-	    //mov x3, x19       // b = get_input 
-	    //mov x4, x19       // c = get_input
+	    bl print_input
 
-	    mov x0, xzr       // initialize for printf
-	    mov x1, xzr       // initialize result
+            // need to preserve lr on the stack for get_max and nested calls
+	    // ok to save lr to register for get_input because no nested calls
 	    bl get_max
+
+	    bl print_max
+	    	
 	    b exit
 
 get_input:
-            mov x20, lr       // lr = x30 (reserved), return address preserved across call 
+            mov x27, lr       // preserve link register (x30) when entering function
 	    
+	    mov x0, xzr       // initialize for printf
             adr x0, input_msg // put the address into x0 for printf
 	    bl printf         // printf input_msg
 
-	    sub sp, sp, 48    // make room on stack (ARMv8 req is 16-bytes/register)
+	    //mov x1, xzr       // initialize result
+	    sub sp, sp, 48    // make room on stack (ARMv8 stack alignment restriction is 16-bytes/register)
 	    str xzr,[sp]      // clean up memory contents where input will be received
 	    mov x1, sp        // set x1 with address for scanf to read
 	    adr x0, input_format // set x0 with address of input_format
@@ -38,8 +41,8 @@ get_input:
 	    adr x0, output_msg
 	    bl printf
 
-	    mov lr, x20       // restore link register
-	    ret
+	    mov lr, x27       // restore link register (x30) before returning function
+	    ret               // branch to link register (x30); equivalent to 'br lr'
 
 get_max:
             mov x1, x2        // result = a
@@ -62,7 +65,6 @@ c_greater:
             mov x1, x4       // result = c
 	    b output_results
 
-
 output_results:
 	    adr x0, result_msg
 	    bl printf
@@ -78,4 +80,5 @@ input_format: .string "%d"
 output_msg:   .asciz "> You entered: [ %d ]\n"
 result_msg:   .asciz "> The maximum number is: [ %d ]\n"
 
-// EOF
+/* -----------[ EOF ]----------- */
+              .end
