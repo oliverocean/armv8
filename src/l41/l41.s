@@ -9,26 +9,37 @@
             .global main
 main:
             bl get_input
-	    mov x0, xzr
-	    mov x1, xzr       // result
-	    mov x2, #4        // a 
-	    mov x3, #3        // b 
-	    mov x4, x19       // c = get_input
+	    //mov x2, x19       // a = get_intput 
+	    //mov x3, x19       // b = get_input 
+	    //mov x4, x19       // c = get_input
+
+	    mov x0, xzr       // initialize for printf
+	    mov x1, xzr       // initialize result
 	    bl get_max
 	    b exit
 
 get_input:
-            adr x0, input_msg
-	    bl printf
-	    sub sp, sp, #16   // make room on stack (16-bytes is ARMv8 requirement)
-	    mov x1, sp        // put the address into x1 for read (scanf)
+            mov x20, lr       // lr = x30 (reserved), return address preserved across call 
+	    
+            adr x0, input_msg // put the address into x0 for printf
+	    bl printf         // printf input_msg
+
+	    sub sp, sp, 48    // make room on stack (ARMv8 req is 16-bytes/register)
+	    str xzr,[sp]      // clean up memory contents where input will be received
+	    mov x1, sp        // set x1 with address for scanf to read
 	    adr x0, input_format // set x0 with address of input_format
 	    bl scanf          // store user input on stack
-	    ldr x1, [sp]      // load value from stack into x1 
-	    mov x19, x1       // copy value into x19 to retain after function call
-	    add sp, sp, #16   // reset stack pointer
+	    str x2, [sp, 0]
+	    str x3, [sp, 16]
+	    str x4, [sp, 32]
+	    add sp, sp, 48    // reset stack pointer
+	    //mov x19, x1       // copy value into x19 to retain after function call
+
 	    adr x0, output_msg
 	    bl printf
+
+	    mov lr, x20       // restore link register
+	    ret
 
 get_max:
             mov x1, x2        // result = a
@@ -62,7 +73,7 @@ exit:
 
 /* -----------[ Data ]----------- */
               .data
-input_msg:    .asciz "> Enter a number: "
+input_msg:    .asciz "> Enter a number:\n"
 input_format: .string "%d"
 output_msg:   .asciz "> You entered: [ %d ]\n"
 result_msg:   .asciz "> The maximum number is: [ %d ]\n"
