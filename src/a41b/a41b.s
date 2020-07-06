@@ -44,7 +44,7 @@ exit:
 
 /* -----------[ Data ]----------- */
             .data
-array:      .dword   0x00, 0x00, 0x00,0x00, 0x00 // initialize with zeros
+array:      .dword   0, 0, 0, 0, 0 // initialize with zeros for debugging
             .set     max, 5
 result_msg: .asciz   "> result: [ %d ]\n"
 //result_msg: .asciz   "> results:\n [ %d ] (k)\n [ %d ] (max)\n [ %d ] (a_array)\n [ %d ] (m)\n"
