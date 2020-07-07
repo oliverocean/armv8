@@ -67,13 +67,6 @@ output_results:
 	    ldr x7, [x1, 32] 
 	    str x7, [sp, 64]
 
-	    // zero out x1 to x5
-	    //mov x1, 11
-	    //mov x2, 12
-	    //mov x3, 13
-	    //mov x4, 14
-	    //mov x5, 15
-
 	    // copy values from stack into x1 to x5
             ldr x1, [sp, 0]
 	    ldr x2, [sp, 16]
