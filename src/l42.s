@@ -2,7 +2,7 @@
  * @author: Oliver Ocean <github@oliverocean.co>
  * @file: l42.s
  * @brief: 
- *     Modify the assembly program 'l42_origin.s' (~/data/l42.s) to 'pass' the
+ *     Modify the assembly program 'l42_origin.s' to 'pass' the
  *     values from main() to write() using the stack. The add operation in write()
  *     should use the values of x1, x2 as defined in the main subroutine.
  * @note:
