@@ -2,8 +2,8 @@
  * @author: Oliver Ocean <github@oliverocean.co>
  * @file: l42.s
  * @brief: 
- *     Modify the assembly program 'l42_origin.s' to 'pass' the
- *     values from main() to write() using the stack. The add operation in write()
+ *     Modify the assembly program 'l42_origin.s' to 'pass' the values from 
+ *     main() to write() using the stack. The add operation in write()
  *     should use the values of x1, x2 as defined in the main subroutine.
  * @note:
  *     ARMv8 requires full 16-bytes per register; stp/ldp may be used for pairs.
